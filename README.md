@@ -1,4 +1,4 @@
-# tos-calculator
+# Tree of Savior Stat Calculator
 This is stat calculator for Tree of Savior. 
 
 I just made this for fun and to learn to use the Qt GUI.
