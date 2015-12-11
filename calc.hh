@@ -24,6 +24,7 @@ public slots:
     void on_sPRSpinBox_valueChanged(int value);
     void on_dEXSpinBox_valueChanged(int value);
     void on_resetButton_clicked();
+    void on_rankSpinBox_valueChanged(int value);
 
 
 private:

@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include <iostream>
+#include <cmath>
 
 const std::vector<std::string> sub_stat_categories{
     "HP", "SP", "HPR", "SPRE", "PAttack", "SPAttack", "MAttack", "AOEAR", "Acc",
@@ -17,32 +18,35 @@ PlayableClasses::PlayableClasses():
                {"Acc", 0}, {"MAmp", 0}, {"BlockPen", 0}, {"CritAttack", 0},
                {"CritRate", 0}, {"PhysDef", 0}, {"MagDef", 0}, {"AOEDefR", 0},
                {"Evasion", 0}, {"Block", 0}, {"CritRes", 0}, {"STA", 0},
-               {"WL", 0}}, class_name_{"None"}
+               {"WL", 0}}, class_name_{"None"}, rank_{1}
 {
 }
 
 PlayableClasses::PlayableClasses(const std::map<std::string, int>& stats,
                                  const std::map<std::string, double>& mods,
-                                 int level, std::string class_name):
-    mainstats_{stats}, modifiers_{mods}, level_{level}, class_name_{class_name}
+                                 int level, std::string class_name, int rank):
+    mainstats_{stats}, modifiers_{mods}, level_{level},
+    class_name_{class_name}, rank_{rank}
+
 {
 
 }
 PlayableClasses::PlayableClasses(const PlayableClasses& sijoitus) :
     mainstats_{sijoitus.mainstats_}, modifiers_{sijoitus.modifiers_},
     level_{sijoitus.level_}, sub_stats_{sijoitus.sub_stats_},
-    class_name_{sijoitus.class_name_}{
+    class_name_{sijoitus.class_name_}, rank_{sijoitus.rank_}{
     calculate_sub_stats();
 
 }
 
 void PlayableClasses::add_class_stats(const std::map<std::string, int>& stats,
                          const std::map<std::string, double>& mods,
-                         int level, std::string class_name) {
+                         int level, std::string class_name, int rank) {
     mainstats_ = stats;
     modifiers_ = mods;
     level_ = level;
     class_name_ = class_name;
+    rank_ = rank;
     calculate_sub_stats();
 
 }
@@ -69,6 +73,7 @@ void PlayableClasses::reset_stats() {
                {"Evasion", 0}, {"Block", 0}, {"CritRes", 0}, {"STA", 0},
                {"WL", 0}};
     class_name_ = "None";
+    rank_ = 1;
     calculate_sub_stats();
 }
 
@@ -192,4 +197,29 @@ void PlayableClasses::set_stat(std::string stat_name, int value) {
 
     calculate_sub_stats();
 }
+void PlayableClasses::set_rank(int rank) {
+    double new_calculated_stat{0.0};
+    // decreased by one:
+    if ( rank < rank_ ) {
+        new_calculated_stat = mainstats_.at("STR") / (pow(1.1, rank_));
+        mainstats_.at("STR") = int(new_calculated_stat * (pow(1.1, rank)));
+        new_calculated_stat = mainstats_.at("INT") / (pow(1.1, rank_));
+        mainstats_.at("INT") = int(new_calculated_stat * (pow(1.1, rank)));
+    } else {
+        // increased by one:
+        new_calculated_stat = mainstats_.at("STR") * 1.1;
+        mainstats_.at("STR") = int(new_calculated_stat + 0.5);
+        new_calculated_stat = mainstats_.at("INT") * 1.1;
+        mainstats_.at("INT") = int(new_calculated_stat + 0.5);
+    }
+    calculate_sub_stats();
 
+}
+void PlayableClasses::calculate_main_stats() {
+    if ( rank_ > 1 ) {
+        double new_calculated_stat{0};
+
+
+    }
+    calculate_sub_stats();
+}

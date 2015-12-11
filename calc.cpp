@@ -26,8 +26,11 @@ Calc::Calc(QWidget *parent) :
             SLOT(on_dEXSpinBox_valueChanged(int)));
     connect(ui->resetButton, SIGNAL(clicked(bool)), this,
             SLOT(on_resetButton_clicked()));
+    connect(ui->rankSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_rankSpinBox_valueChanged(int)));
+
     chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1,
-                                 "Swordsman");
+                                 "Swordsman", 1);
     current_class_ = "Swordsman";
     update_stats();
 
@@ -44,16 +47,16 @@ void Calc::on_chooseClassBox_currentTextChanged(const QString &text) {
     current_class_ = sText;
 
     if ( sText == "Swordsman" ) {
-        chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1, sText);
+        chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1, sText, 1);
 
     } else if ( sText == "Wizard") {
-        chosen_class.add_class_stats(wizard_stats, wizard_mods, 1, sText);
+        chosen_class.add_class_stats(wizard_stats, wizard_mods, 1, sText, 1);
 
     } else if ( sText == "Archer") {
-        chosen_class.add_class_stats(archer_stats, archer_mods, 1, sText);
+        chosen_class.add_class_stats(archer_stats, archer_mods, 1, sText, 1);
 
     } else if ( sText == "Cleric") {
-        chosen_class.add_class_stats(cleric_stats, cleric_mods, 1, sText);
+        chosen_class.add_class_stats(cleric_stats, cleric_mods, 1, sText, 1);
     }
 
     ui->sTRSpinBox->setMinimum(chosen_class.return_stat("STR"));
@@ -128,28 +131,33 @@ void Calc::on_resetButton_clicked() {
 
     if ( current_class_ == "Swordsman" ) {
         chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1,
-                                     current_class_);
+                                     current_class_, 1);
 
     } else if ( current_class_ == "Wizard") {
         chosen_class.add_class_stats(wizard_stats, wizard_mods, 1,
-                                     current_class_);
+                                     current_class_, 1);
 
     } else if ( current_class_ == "Archer") {
         chosen_class.add_class_stats(archer_stats, archer_mods, 1,
-                                     current_class_);
+                                     current_class_, 1);
 
     } else if ( current_class_ == "Cleric") {
         chosen_class.add_class_stats(cleric_stats, cleric_mods, 1,
-                                     current_class_);
+                                     current_class_, 1);
     }
     ui->sTRSpinBox->setMinimum(chosen_class.return_stat("STR"));
     ui->cONSpinBox->setMinimum(chosen_class.return_stat("CON"));
     ui->iNTSpinBox->setMinimum(chosen_class.return_stat("INT"));
     ui->sPRSpinBox->setMinimum(chosen_class.return_stat("SPR"));
     ui->dEXSpinBox->setMinimum(chosen_class.return_stat("DEX"));
+    ui->rankSpinBox->setValue(1);
 
     update_stats();
 }
+void Calc::on_rankSpinBox_valueChanged(int value) {
+    chosen_class.set_rank(value);
+}
+
 void Calc::enable_spinboxes() {
     ui->sTRSpinBox->setEnabled(isEnabled());
     ui->cONSpinBox->setEnabled(isEnabled());
@@ -157,6 +165,7 @@ void Calc::enable_spinboxes() {
     ui->sPRSpinBox->setEnabled(isEnabled());
     ui->dEXSpinBox->setEnabled(isEnabled());
     ui->resetButton->setEnabled(isEnabled());
+    ui->rankSpinBox->setEnabled(isEnabled());
 }
 void Calc::disable_spinboxes() {
     ui->sTRSpinBox->setEnabled(!isEnabled());
@@ -165,4 +174,5 @@ void Calc::disable_spinboxes() {
     ui->sPRSpinBox->setEnabled(!isEnabled());
     ui->dEXSpinBox->setEnabled(!isEnabled());
     ui->resetButton->setEnabled(!isEnabled());
+    ui->rankSpinBox->setEnabled(!isEnabled());
 }
