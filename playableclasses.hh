@@ -20,6 +20,7 @@ class PlayableClasses {
         void reset_stats();
         void set_stat(std::string stat_name, int value);
         void set_rank(int rank);
+        int return_rank() const;
 
 
     private:
@@ -30,7 +31,7 @@ class PlayableClasses {
         std::string class_name_;
         int rank_;
         void calculate_sub_stats();
-        void calculate_main_stats();
+        void update_main_stats();
 
 };
 

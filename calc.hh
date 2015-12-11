@@ -50,16 +50,20 @@ private:
 
     // HP and SP modifiers:
     std::map<std::string, double> swordsman_mods{
-        {"HPM", 3.3}, {"SPM", 0.8}
+        {"HPM", 3.3}, {"SPM", 0.8}, {"STR_Rank_Bonus", 0.0},
+        {"INT_Rank_Bonus", 0.0}
     };
     std::map<std::string, double> wizard_mods{
-        {"HPM", 1.1}, {"SPM", 1.2}
+        {"HPM", 1.1}, {"SPM", 1.2}, {"STR_Rank_Bonus", 0.0},
+        {"INT_Rank_Bonus", 0.0}
     };
     std::map<std::string, double> archer_mods{
-        {"HPM", 1.4}, {"SPM", 0.9}
+        {"HPM", 1.4}, {"SPM", 0.9}, {"STR_Rank_Bonus", 0.0},
+        {"INT_Rank_Bonus", 0.0}
     };
     std::map<std::string, double> cleric_mods{
-        {"HPM", 1.5}, {"SPM", 1.2}
+        {"HPM", 1.5}, {"SPM", 1.2}, {"STR_Rank_Bonus", 0.0},
+        {"INT_Rank_Bonus", 0.0}
     };
 
 };

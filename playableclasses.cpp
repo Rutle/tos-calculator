@@ -12,7 +12,8 @@ const std::vector<std::string> sub_stat_categories{
 
 PlayableClasses::PlayableClasses():
     mainstats_{{"STR", 0}, {"CON", 0}, {"INT", 0}, {"SPR", 0}, {"DEX", 0}},
-    modifiers_{{"HPM", 0.0}, {"SPM", 0.0}}, level_{1},
+    modifiers_{{"HPM", 0.0}, {"SPM", 0.0}, {"STR_Rank_Bonus", 0.0},
+               {"INT_Rank_Bonus", 0.0}}, level_{1},
     sub_stats_{{"HP", 0}, {"SP", 0}, {"HPR", 0}, {"SPRE", 0}, {"PAttack", 0},
                {"SPAttack", 0}, {"MAttack", 0}, {"AOEAR", 0},
                {"Acc", 0}, {"MAmp", 0}, {"BlockPen", 0}, {"CritAttack", 0},
@@ -53,8 +54,10 @@ void PlayableClasses::add_class_stats(const std::map<std::string, int>& stats,
 int PlayableClasses::return_stat(const std::string& stat_name) const {
     if ( mainstats_.find(stat_name) != mainstats_.end() ) {
         return mainstats_.at(stat_name);
-    } else {
+    } else if ( sub_stats_.find(stat_name) != sub_stats_.end() ){
         return sub_stats_.at(stat_name);
+    } else {
+        return modifiers_.at(stat_name);
     }
 }
 
@@ -64,7 +67,8 @@ int PlayableClasses::return_level() const {
 void PlayableClasses::reset_stats() {
     mainstats_ = {{"STR", 0}, {"CON", 0}, {"INT", 0}, {"SPR", 0}, {"DEX", 0}};
 
-    modifiers_ = {{"HPM", 0.0}, {"SPM", 0.0}};
+    modifiers_ = {{"HPM", 0.0}, {"SPM", 0.0}, {"STR_Rank_Bonus", 0.0},
+                  {"INT_Rank_Bonus", 0.0}};
     level_ = 1;
     sub_stats_ = {{"HP", 0}, {"SP", 0}, {"HPR", 0}, {"SPRE", 0}, {"PAttack", 0},
                {"SPAttack", 0}, {"MAttack", 0}, {"AOEAR", 0},
@@ -147,13 +151,13 @@ void PlayableClasses::calculate_sub_stats() {
             }
             new_calculated_stat = (level_ / 2) + class_modifier;
         } else if ( sub_stat_name.first == "MagDef" ) {
-            /*
+
             double class_modifier{0.0};
             if ( class_name_ == "Wizard" ) {
                 class_modifier = (level_ / 4) ;
             } // yrita löytää mitä MNA tarkoittaa:
-            new_calculated_stat = (level_ / 2) + (MNA/5)+ class_modifier;
-            */
+            new_calculated_stat = (level_ / 2) + class_modifier;
+
         } else if ( sub_stat_name.first == "AOEDefR" ) {
             // new_calculated_stat = level_ + mainstats_.at("STR");
 
@@ -174,17 +178,12 @@ void PlayableClasses::calculate_sub_stats() {
             new_calculated_stat = 5000 + mainstats_.at("CON") * 5 +
                     mainstats_.at("STR") * 5;
         }
-        // std::cout << sub_stat_name.first << std::endl;
-        // std::cout << int(new_calculated_stat + 0.5) << std::endl;
-        // std::cout << sub_stat_name.first << std::endl;
+
         sub_stats_.at(sub_stat_name.first) = int(new_calculated_stat + 0.5);
     }
 }
 void PlayableClasses::set_stat(std::string stat_name, int value) {
-    /*
-    std::cout << "stat_name [" << stat_name << "]"
-              << "value [" << value << "]" << std::endl;
-    */
+
     if ( value == mainstats_.at(stat_name) ) {
         mainstats_.at(stat_name) = value;
     } else if ( value < mainstats_.at(stat_name) ) {
@@ -198,7 +197,14 @@ void PlayableClasses::set_stat(std::string stat_name, int value) {
     calculate_sub_stats();
 }
 void PlayableClasses::set_rank(int rank) {
+    rank_ = rank;
     double new_calculated_stat{0.0};
+    new_calculated_stat = mainstats_.at("STR") * (pow(1.1, rank_));
+    modifiers_.at("STR_Rank_Bonus") = new_calculated_stat;
+    new_calculated_stat = mainstats_.at("INT") * (pow(1.1, rank_));
+    modifiers_.at("INT_Rank_Bonus") = new_calculated_stat;
+
+    /*
     // decreased by one:
     if ( rank < rank_ ) {
         new_calculated_stat = mainstats_.at("STR") / (pow(1.1, rank_));
@@ -212,14 +218,12 @@ void PlayableClasses::set_rank(int rank) {
         new_calculated_stat = mainstats_.at("INT") * 1.1;
         mainstats_.at("INT") = int(new_calculated_stat + 0.5);
     }
+    */
+
     calculate_sub_stats();
 
 }
-void PlayableClasses::calculate_main_stats() {
-    if ( rank_ > 1 ) {
-        double new_calculated_stat{0};
-
-
-    }
-    calculate_sub_stats();
+int PlayableClasses::return_rank() const {
+    return rank_;
 }
+

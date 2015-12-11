@@ -31,6 +31,12 @@ Calc::Calc(QWidget *parent) :
 
     chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1,
                                  "Swordsman", 1);
+    ui->sTRSpinBox->setMinimum(chosen_class.return_stat("STR"));
+    ui->cONSpinBox->setMinimum(chosen_class.return_stat("CON"));
+    ui->iNTSpinBox->setMinimum(chosen_class.return_stat("INT"));
+    ui->sPRSpinBox->setMinimum(chosen_class.return_stat("SPR"));
+    ui->dEXSpinBox->setMinimum(chosen_class.return_stat("DEX"));
+
     current_class_ = "Swordsman";
     update_stats();
 
@@ -150,12 +156,13 @@ void Calc::on_resetButton_clicked() {
     ui->iNTSpinBox->setMinimum(chosen_class.return_stat("INT"));
     ui->sPRSpinBox->setMinimum(chosen_class.return_stat("SPR"));
     ui->dEXSpinBox->setMinimum(chosen_class.return_stat("DEX"));
-    ui->rankSpinBox->setValue(1);
+    ui->rankSpinBox->setMinimum(1);
 
     update_stats();
 }
 void Calc::on_rankSpinBox_valueChanged(int value) {
     chosen_class.set_rank(value);
+    update_stats();
 }
 
 void Calc::enable_spinboxes() {
