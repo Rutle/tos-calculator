@@ -13,7 +13,7 @@ Calc::Calc(QWidget *parent) :
     // Choose a class from the ComboBox:
     connect(ui->chooseClassBox, SIGNAL(currentTextChanged(QString)),
             this, SLOT(on_chooseClassBox_currentTextChanged(QString)));
-    // Spinbox:
+    // Spinboxes:
     connect(ui->sTRSpinBox, SIGNAL(valueChanged(int)), this,
             SLOT(on_sTRSpinBox_valueChanged(int)));
     connect(ui->cONSpinBox, SIGNAL(valueChanged(int)), this,
@@ -26,7 +26,11 @@ Calc::Calc(QWidget *parent) :
             SLOT(on_dEXSpinBox_valueChanged(int)));
     connect(ui->resetButton, SIGNAL(clicked(bool)), this,
             SLOT(on_resetButton_clicked()));
-    disable_spinboxes();
+    chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1,
+                                 "Swordsman");
+    current_class_ = "Swordsman";
+    update_stats();
+
 }
 
 Calc::~Calc() {
@@ -35,15 +39,11 @@ Calc::~Calc() {
 }
 
 void Calc::on_chooseClassBox_currentTextChanged(const QString &text) {
-    // ui->chosenClassL->setText(text);
 
     std::string sText{text.toStdString()};
     current_class_ = sText;
 
-    if ( sText == "None" ) {
-        chosen_class.reset_stats();
-
-    } else if ( sText == "Swordsman" ) {
+    if ( sText == "Swordsman" ) {
         chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1, sText);
 
     } else if ( sText == "Wizard") {
@@ -55,12 +55,13 @@ void Calc::on_chooseClassBox_currentTextChanged(const QString &text) {
     } else if ( sText == "Cleric") {
         chosen_class.add_class_stats(cleric_stats, cleric_mods, 1, sText);
     }
+
     ui->sTRSpinBox->setMinimum(chosen_class.return_stat("STR"));
     ui->cONSpinBox->setMinimum(chosen_class.return_stat("CON"));
     ui->iNTSpinBox->setMinimum(chosen_class.return_stat("INT"));
     ui->sPRSpinBox->setMinimum(chosen_class.return_stat("SPR"));
     ui->dEXSpinBox->setMinimum(chosen_class.return_stat("DEX"));
-    sText == "None" ? disable_spinboxes() : enable_spinboxes();
+
     update_stats();
 
 }
@@ -74,7 +75,6 @@ void Calc::update_stats() {
 
     std::string level{std::to_string(chosen_class.return_level())};
     ui->LevelOutput->setText(QString::fromStdString(level));
-
 
     ui->hPOutput->setNum(chosen_class.return_stat("HP"));
     ui->sPOutput->setNum(chosen_class.return_stat("SP"));
@@ -126,10 +126,7 @@ void Calc::on_dEXSpinBox_valueChanged(int value) {
 }
 void Calc::on_resetButton_clicked() {
 
-    if ( current_class_ == "None" ) {
-        chosen_class.reset_stats();
-
-    } else if ( current_class_ == "Swordsman" ) {
+    if ( current_class_ == "Swordsman" ) {
         chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1,
                                      current_class_);
 
