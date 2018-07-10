@@ -14,16 +14,16 @@ Calc::Calc(QWidget *parent) :
     connect(ui->chooseClassBox, SIGNAL(currentTextChanged(QString)),
             this, SLOT(on_chooseClassBox_currentTextChanged(QString)));
     // Spinboxes:
-    connect(ui->sTRSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_sTRSpinBox_valueChanged(int)));
-    connect(ui->cONSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_cONSpinBox_valueChanged(int)));
-    connect(ui->iNTSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_iNTSpinBox_valueChanged(int)));
-    connect(ui->sPRSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_sPRSpinBox_valueChanged(int)));
-    connect(ui->dEXSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_dEXSpinBox_valueChanged(int)));
+    connect(ui->strSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_strSpinBox_valueChanged(int)));
+    connect(ui->conSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_conSpinBox_valueChanged(int)));
+    connect(ui->intSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_intSpinBox_valueChanged(int)));
+    connect(ui->sprSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_sprSpinBox_valueChanged(int)));
+    connect(ui->dexSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_dexSpinBox_valueChanged(int)));
     connect(ui->resetButton, SIGNAL(clicked(bool)), this,
             SLOT(on_resetButton_clicked()));
     connect(ui->rankSpinBox, SIGNAL(valueChanged(int)), this,
@@ -31,11 +31,11 @@ Calc::Calc(QWidget *parent) :
 
     chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1,
                                  "Swordsman", 1);
-    ui->sTRSpinBox->setMinimum(chosen_class.return_stat("STR"));
-    ui->cONSpinBox->setMinimum(chosen_class.return_stat("CON"));
-    ui->iNTSpinBox->setMinimum(chosen_class.return_stat("INT"));
-    ui->sPRSpinBox->setMinimum(chosen_class.return_stat("SPR"));
-    ui->dEXSpinBox->setMinimum(chosen_class.return_stat("DEX"));
+    ui->strSpinBox->setMinimum(chosen_class.return_stat("STR"));
+    ui->conSpinBox->setMinimum(chosen_class.return_stat("CON"));
+    ui->intSpinBox->setMinimum(chosen_class.return_stat("INT"));
+    ui->sprSpinBox->setMinimum(chosen_class.return_stat("SPR"));
+    ui->dexSpinBox->setMinimum(chosen_class.return_stat("DEX"));
 
     current_class_ = "Swordsman";
     update_stats();
@@ -65,30 +65,30 @@ void Calc::on_chooseClassBox_currentTextChanged(const QString &text) {
         chosen_class.add_class_stats(cleric_stats, cleric_mods, 1, sText, 1);
     }
 
-    ui->sTRSpinBox->setMinimum(chosen_class.return_stat("STR"));
-    ui->cONSpinBox->setMinimum(chosen_class.return_stat("CON"));
-    ui->iNTSpinBox->setMinimum(chosen_class.return_stat("INT"));
-    ui->sPRSpinBox->setMinimum(chosen_class.return_stat("SPR"));
-    ui->dEXSpinBox->setMinimum(chosen_class.return_stat("DEX"));
+    ui->strSpinBox->setMinimum(chosen_class.return_stat("STR"));
+    ui->conSpinBox->setMinimum(chosen_class.return_stat("CON"));
+    ui->intSpinBox->setMinimum(chosen_class.return_stat("INT"));
+    ui->sprSpinBox->setMinimum(chosen_class.return_stat("SPR"));
+    ui->dexSpinBox->setMinimum(chosen_class.return_stat("DEX"));
 
     update_stats();
 
 }
 void Calc::update_stats() {
 
-    ui->sTRSpinBox->setValue(chosen_class.return_stat("STR"));
-    ui->cONSpinBox->setValue(chosen_class.return_stat("CON"));
-    ui->iNTSpinBox->setValue(chosen_class.return_stat("INT"));
-    ui->sPRSpinBox->setValue(chosen_class.return_stat("SPR"));
-    ui->dEXSpinBox->setValue(chosen_class.return_stat("DEX"));
+    ui->strSpinBox->setValue(chosen_class.return_stat("STR"));
+    ui->conSpinBox->setValue(chosen_class.return_stat("CON"));
+    ui->intSpinBox->setValue(chosen_class.return_stat("INT"));
+    ui->sprSpinBox->setValue(chosen_class.return_stat("SPR"));
+    ui->dexSpinBox->setValue(chosen_class.return_stat("DEX"));
 
     std::string level{std::to_string(chosen_class.return_level())};
     ui->LevelOutput->setText(QString::fromStdString(level));
 
-    ui->hPOutput->setNum(chosen_class.return_stat("HP"));
-    ui->sPOutput->setNum(chosen_class.return_stat("SP"));
-    ui->hPROutput->setNum(chosen_class.return_stat("HPR"));
-    ui->sPROutput->setNum(chosen_class.return_stat("SPRE"));
+    ui->hpOutput->setNum(chosen_class.return_stat("HP"));
+    ui->spOutput->setNum(chosen_class.return_stat("SP"));
+    ui->hprOutput->setNum(chosen_class.return_stat("HPR"));
+    ui->sprOutput->setNum(chosen_class.return_stat("SPRE"));
     ui->physAttackOutput->setNum(chosen_class.return_stat("PAttack"));
     ui->secPhysAttackOutput->setNum(chosen_class.return_stat("SPAttack"));
     ui->mAttackOutput->setNum(chosen_class.return_stat("MAttack"));
@@ -108,27 +108,27 @@ void Calc::update_stats() {
     ui->wlOutput->setNum(chosen_class.return_stat("WL"));
 }
 
-void Calc::on_sTRSpinBox_valueChanged(int value) {
+void Calc::on_strSpinBox_valueChanged(int value) {
     chosen_class.set_stat("STR", value);
     update_stats();
 
 }
-void Calc::on_cONSpinBox_valueChanged(int value) {
+void Calc::on_conSpinBox_valueChanged(int value) {
     chosen_class.set_stat("CON", value);
     update_stats();
 
 }
-void Calc::on_iNTSpinBox_valueChanged(int value) {
+void Calc::on_intSpinBox_valueChanged(int value) {
     chosen_class.set_stat("INT", value);
     update_stats();
 
 }
-void Calc::on_sPRSpinBox_valueChanged(int value) {
+void Calc::on_sprSpinBox_valueChanged(int value) {
     chosen_class.set_stat("SPR", value);
     update_stats();
 
 }
-void Calc::on_dEXSpinBox_valueChanged(int value) {
+void Calc::on_dexSpinBox_valueChanged(int value) {
     chosen_class.set_stat("DEX", value);
     update_stats();
 
@@ -151,11 +151,11 @@ void Calc::on_resetButton_clicked() {
         chosen_class.add_class_stats(cleric_stats, cleric_mods, 1,
                                      current_class_, 1);
     }
-    ui->sTRSpinBox->setMinimum(chosen_class.return_stat("STR"));
-    ui->cONSpinBox->setMinimum(chosen_class.return_stat("CON"));
-    ui->iNTSpinBox->setMinimum(chosen_class.return_stat("INT"));
-    ui->sPRSpinBox->setMinimum(chosen_class.return_stat("SPR"));
-    ui->dEXSpinBox->setMinimum(chosen_class.return_stat("DEX"));
+    ui->strSpinBox->setMinimum(chosen_class.return_stat("STR"));
+    ui->conSpinBox->setMinimum(chosen_class.return_stat("CON"));
+    ui->intSpinBox->setMinimum(chosen_class.return_stat("INT"));
+    ui->sprSpinBox->setMinimum(chosen_class.return_stat("SPR"));
+    ui->dexSpinBox->setMinimum(chosen_class.return_stat("DEX"));
     ui->rankSpinBox->setMinimum(1);
 
     update_stats();
@@ -166,20 +166,20 @@ void Calc::on_rankSpinBox_valueChanged(int value) {
 }
 
 void Calc::enable_spinboxes() {
-    ui->sTRSpinBox->setEnabled(isEnabled());
-    ui->cONSpinBox->setEnabled(isEnabled());
-    ui->iNTSpinBox->setEnabled(isEnabled());
-    ui->sPRSpinBox->setEnabled(isEnabled());
-    ui->dEXSpinBox->setEnabled(isEnabled());
+    ui->strSpinBox->setEnabled(isEnabled());
+    ui->conSpinBox->setEnabled(isEnabled());
+    ui->intSpinBox->setEnabled(isEnabled());
+    ui->sprSpinBox->setEnabled(isEnabled());
+    ui->dexSpinBox->setEnabled(isEnabled());
     ui->resetButton->setEnabled(isEnabled());
     ui->rankSpinBox->setEnabled(isEnabled());
 }
 void Calc::disable_spinboxes() {
-    ui->sTRSpinBox->setEnabled(!isEnabled());
-    ui->cONSpinBox->setEnabled(!isEnabled());
-    ui->iNTSpinBox->setEnabled(!isEnabled());
-    ui->sPRSpinBox->setEnabled(!isEnabled());
-    ui->dEXSpinBox->setEnabled(!isEnabled());
+    ui->strSpinBox->setEnabled(!isEnabled());
+    ui->conSpinBox->setEnabled(!isEnabled());
+    ui->intSpinBox->setEnabled(!isEnabled());
+    ui->sprSpinBox->setEnabled(!isEnabled());
+    ui->dexSpinBox->setEnabled(!isEnabled());
     ui->resetButton->setEnabled(!isEnabled());
     ui->rankSpinBox->setEnabled(!isEnabled());
 }

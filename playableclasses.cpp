@@ -19,7 +19,9 @@ PlayableClasses::PlayableClasses():
                {"Acc", 0}, {"MAmp", 0}, {"BlockPen", 0}, {"CritAttack", 0},
                {"CritRate", 0}, {"PhysDef", 0}, {"MagDef", 0}, {"AOEDefR", 0},
                {"Evasion", 0}, {"Block", 0}, {"CritRes", 0}, {"STA", 0},
-               {"WL", 0}}, class_name_{"None"}, rank_{1}
+               {"WL", 0}}, class_name_{"None"},
+    total_invested_stats_{{"STR", 0}, {"CON", 0}, {"INT", 0}, {"SPR", 0},
+               {"DEX", 0}}, rank_{1}
 {
 }
 
@@ -66,7 +68,8 @@ int PlayableClasses::return_level() const {
 }
 void PlayableClasses::reset_stats() {
     mainstats_ = {{"STR", 0}, {"CON", 0}, {"INT", 0}, {"SPR", 0}, {"DEX", 0}};
-
+    total_invested_stats_ = {{"STR", 0}, {"CON", 0}, {"INT", 0}, {"SPR", 0},
+                             {"DEX", 0}};
     modifiers_ = {{"HPM", 0.0}, {"SPM", 0.0}, {"STR_Rank_Bonus", 0.0},
                   {"INT_Rank_Bonus", 0.0}};
     level_ = 1;
@@ -182,6 +185,22 @@ void PlayableClasses::calculate_sub_stats() {
         sub_stats_.at(sub_stat_name.first) = int(new_calculated_stat + 0.5);
     }
 }
+
+int PlayableClasses::calculate_bonus(std::string stat_name) {
+    int invested = total_invested_stats_.at(stat_name);
+    if(1 <= invested <= 50) {
+        return (invested % 5 == 0) ? 1 : 0;
+    } else if(50 < invested <= 150) {
+        return (invested % 4 == 0) ? 1 : 0;
+    } else if(150 < invested <= 300) {
+       return (invested % 3 == 0) ? 1 : 0;
+    } else if(301 < invested <= 500) {
+        return (invested % 2 == 0) ? 1 : 0;
+    } else {
+        return 1;
+    }
+
+}
 void PlayableClasses::set_stat(std::string stat_name, int value) {
 
     if ( value == mainstats_.at(stat_name) ) {
@@ -189,11 +208,12 @@ void PlayableClasses::set_stat(std::string stat_name, int value) {
     } else if ( value < mainstats_.at(stat_name) ) {
         mainstats_.at(stat_name) = value;
         --level_;
+        --total_invested_stats_;
     } else if ( value > mainstats_.at(stat_name) ) {
         mainstats_.at(stat_name) = value;
         ++level_;
+        --total_invested_stats_;
     }
-
     calculate_sub_stats();
 }
 void PlayableClasses::set_rank(int rank) {

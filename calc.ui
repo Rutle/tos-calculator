@@ -578,7 +578,7 @@ QGroupBox::title {
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="sPOutput">
+        <widget class="QLabel" name="spOutput">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -637,7 +637,7 @@ QGroupBox::title {
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLabel" name="hPROutput">
+        <widget class="QLabel" name="hprOutput">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -755,7 +755,7 @@ QGroupBox::title {
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLabel" name="sPROutput">
+        <widget class="QLabel" name="sprOutput">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -817,7 +817,7 @@ QGroupBox::title {
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="hPOutput">
+        <widget class="QLabel" name="hpOutput">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1594,7 +1594,7 @@ QSpinBox::down-arrow:off { /* off state when value in min */
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QSpinBox" name="sTRSpinBox">
+        <widget class="QSpinBox" name="strSpinBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1644,7 +1644,7 @@ QSpinBox::down-arrow:off { /* off state when value in min */
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QSpinBox" name="cONSpinBox">
+        <widget class="QSpinBox" name="conSpinBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1666,7 +1666,7 @@ QSpinBox::down-arrow:off { /* off state when value in min */
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QSpinBox" name="iNTSpinBox">
+        <widget class="QSpinBox" name="intSpinBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1716,7 +1716,7 @@ QSpinBox::down-arrow:off { /* off state when value in min */
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QSpinBox" name="sPRSpinBox">
+        <widget class="QSpinBox" name="sprSpinBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1766,7 +1766,7 @@ QSpinBox::down-arrow:off { /* off state when value in min */
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QSpinBox" name="dEXSpinBox">
+        <widget class="QSpinBox" name="dexSpinBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>

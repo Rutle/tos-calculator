@@ -18,11 +18,11 @@ public:
     ~Calc();
 public slots:
     void on_chooseClassBox_currentTextChanged(const QString& text);
-    void on_sTRSpinBox_valueChanged(int value);
-    void on_cONSpinBox_valueChanged(int value);
-    void on_iNTSpinBox_valueChanged(int value);
-    void on_sPRSpinBox_valueChanged(int value);
-    void on_dEXSpinBox_valueChanged(int value);
+    void on_strSpinBox_valueChanged(int value);
+    void on_conSpinBox_valueChanged(int value);
+    void on_intSpinBox_valueChanged(int value);
+    void on_sprSpinBox_valueChanged(int value);
+    void on_dexSpinBox_valueChanged(int value);
     void on_resetButton_clicked();
     void on_rankSpinBox_valueChanged(int value);
 
