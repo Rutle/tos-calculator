@@ -10,25 +10,6 @@ Calc::Calc(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Choose a class from the ComboBox:
-    connect(ui->chooseClassBox, SIGNAL(currentTextChanged(QString)),
-            this, SLOT(on_chooseClassBox_currentTextChanged(QString)));
-    // Spinboxes:
-    connect(ui->strSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_strSpinBox_valueChanged(int)));
-    connect(ui->conSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_conSpinBox_valueChanged(int)));
-    connect(ui->intSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_intSpinBox_valueChanged(int)));
-    connect(ui->sprSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_sprSpinBox_valueChanged(int)));
-    connect(ui->dexSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_dexSpinBox_valueChanged(int)));
-    connect(ui->resetButton, SIGNAL(clicked(bool)), this,
-            SLOT(on_resetButton_clicked()));
-    connect(ui->rankSpinBox, SIGNAL(valueChanged(int)), this,
-            SLOT(on_rankSpinBox_valueChanged(int)));
-
     chosen_class.add_class_stats(swordsman_stats, swordsman_mods, 1,
                                  "Swordsman", 1);
     ui->strSpinBox->setMinimum(chosen_class.return_stat("STR"));
@@ -39,6 +20,27 @@ Calc::Calc(QWidget *parent) :
 
     current_class_ = "Swordsman";
     update_stats();
+    // Choose a class from the ComboBox:
+    connect(ui->chooseClassBox, SIGNAL(currentTextChanged(QString)),
+            this, SLOT(on_chooseClassBox_currentTextChanged(QString)));
+    // Spinboxes:
+    /* Redundant
+    connect(ui->strSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_strSpinBox_valueChanged(int)));
+    connect(ui->conSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_conSpinBox_valueChanged(int)));
+    connect(ui->intSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_intSpinBox_valueChanged(int)));
+    connect(ui->sprSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_sprSpinBox_valueChanged(int)));
+    connect(ui->dexSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_dexSpinBox_valueChanged(int)));
+    */
+    connect(ui->resetButton, SIGNAL(clicked(bool)), this,
+            SLOT(on_resetButton_clicked()));
+    connect(ui->rankSpinBox, SIGNAL(valueChanged(int)), this,
+            SLOT(on_rankSpinBox_valueChanged(int)));
+
 
 }
 
@@ -64,7 +66,7 @@ void Calc::on_chooseClassBox_currentTextChanged(const QString &text) {
     } else if ( sText == "Cleric") {
         chosen_class.add_class_stats(cleric_stats, cleric_mods, 1, sText, 1);
     }
-
+    std::cout << " on_chooseClassBox_currentTextChanged set Minimums" << std::endl;
     ui->strSpinBox->setMinimum(chosen_class.return_stat("STR"));
     ui->conSpinBox->setMinimum(chosen_class.return_stat("CON"));
     ui->intSpinBox->setMinimum(chosen_class.return_stat("INT"));
@@ -110,6 +112,7 @@ void Calc::update_stats() {
 
 void Calc::on_strSpinBox_valueChanged(int value) {
     chosen_class.set_stat("STR", value);
+    std::cout << "str update stats" << std::endl;
     update_stats();
 
 }
@@ -133,6 +136,7 @@ void Calc::on_dexSpinBox_valueChanged(int value) {
     update_stats();
 
 }
+
 void Calc::on_resetButton_clicked() {
 
     if ( current_class_ == "Swordsman" ) {
@@ -151,6 +155,7 @@ void Calc::on_resetButton_clicked() {
         chosen_class.add_class_stats(cleric_stats, cleric_mods, 1,
                                      current_class_, 1);
     }
+    std::cout << "set Minimums" << std::endl;
     ui->strSpinBox->setMinimum(chosen_class.return_stat("STR"));
     ui->conSpinBox->setMinimum(chosen_class.return_stat("CON"));
     ui->intSpinBox->setMinimum(chosen_class.return_stat("INT"));

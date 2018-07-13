@@ -188,32 +188,52 @@ void PlayableClasses::calculate_sub_stats() {
 
 int PlayableClasses::calculate_bonus(std::string stat_name) {
     int invested = total_invested_stats_.at(stat_name);
-    if(1 <= invested <= 50) {
+    if(1 <= invested && invested <= 50) {
+        std::cout << "range 1-50" << std::endl;
         return (invested % 5 == 0) ? 1 : 0;
-    } else if(50 < invested <= 150) {
+    } else if(50 < invested && invested <= 150) {
+        std::cout << "range 50-150" << std::endl;
         return (invested % 4 == 0) ? 1 : 0;
-    } else if(150 < invested <= 300) {
+    } else if(150 < invested && invested <= 300) {
+        std::cout << "range 150-300" << std::endl;
        return (invested % 3 == 0) ? 1 : 0;
-    } else if(301 < invested <= 500) {
+    } else if(301 < invested && invested <= 500) {
+        std::cout << "range 301-500" << std::endl;
         return (invested % 2 == 0) ? 1 : 0;
-    } else {
+    } else if(500 < invested){
+        std::cout << "range 500" << std::endl;
         return 1;
+    } else {
+        return 0;
     }
 
 }
 void PlayableClasses::set_stat(std::string stat_name, int value) {
-
+    std::cout << "" << std::endl;
+    std::cout << "set_stat Alku:" << std::endl;
+    std::cout << "ennen asetusta: " << stat_name << " v-> " << value << std::endl;
+    std::cout << "ennen asetusta: " << stat_name << " -> " << mainstats_.at(stat_name) << std::endl;
+    std::cout << "ennen asetusta: " << stat_name << " inv -> " << total_invested_stats_.at(stat_name) << std::endl;
     if ( value == mainstats_.at(stat_name) ) {
         mainstats_.at(stat_name) = value;
     } else if ( value < mainstats_.at(stat_name) ) {
+        int bonus{calculate_bonus(stat_name)};
         mainstats_.at(stat_name) = value;
+        mainstats_.at(stat_name) -= bonus;
+        total_invested_stats_.at(stat_name) -= (1 + bonus);
         --level_;
-        --total_invested_stats_;
     } else if ( value > mainstats_.at(stat_name) ) {
         mainstats_.at(stat_name) = value;
+        total_invested_stats_.at(stat_name) += 1;
+        int bonus{calculate_bonus(stat_name)};
+        mainstats_.at(stat_name) += bonus;
+        total_invested_stats_.at(stat_name) += bonus;
         ++level_;
-        --total_invested_stats_;
     }
+    std::cout << "jalkeen asetuksen: " << stat_name << " -> " << mainstats_.at(stat_name) << std::endl;
+    std::cout << "jalkeen asetuksen: " << stat_name << " inv -> " << total_invested_stats_.at(stat_name) << std::endl;
+    std::cout << "END" << std::endl;
+    std::cout << "" << std::endl;
     calculate_sub_stats();
 }
 void PlayableClasses::set_rank(int rank) {
