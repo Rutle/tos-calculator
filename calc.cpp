@@ -66,7 +66,7 @@ void Calc::on_chooseClassBox_currentTextChanged(const QString &text) {
     } else if ( sText == "Cleric") {
         chosen_class.add_class_stats(cleric_stats, cleric_mods, 1, sText, 1);
     }
-    std::cout << " on_chooseClassBox_currentTextChanged set Minimums" << std::endl;
+
     ui->strSpinBox->setMinimum(chosen_class.return_stat("STR"));
     ui->conSpinBox->setMinimum(chosen_class.return_stat("CON"));
     ui->intSpinBox->setMinimum(chosen_class.return_stat("INT"));
@@ -112,7 +112,6 @@ void Calc::update_stats() {
 
 void Calc::on_strSpinBox_valueChanged(int value) {
     chosen_class.set_stat("STR", value);
-    std::cout << "str update stats" << std::endl;
     update_stats();
 
 }
@@ -155,7 +154,6 @@ void Calc::on_resetButton_clicked() {
         chosen_class.add_class_stats(cleric_stats, cleric_mods, 1,
                                      current_class_, 1);
     }
-    std::cout << "set Minimums" << std::endl;
     ui->strSpinBox->setMinimum(chosen_class.return_stat("STR"));
     ui->conSpinBox->setMinimum(chosen_class.return_stat("CON"));
     ui->intSpinBox->setMinimum(chosen_class.return_stat("INT"));
