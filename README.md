@@ -7,4 +7,4 @@ It's a simple stat calculator that might help someone to plan and/or to see what
 
 Stat formulas taken from http://wiki.tosbase.com/wiki/Stats
 
-Update: Not really usable due to changes to Tree of Savior stats. However, it never really was as I forgot to finish off the work fully.
+Update: Not really usable due to changes to Tree of Savior stats. Then again it never really was as I forgot to finish off the work fully.
